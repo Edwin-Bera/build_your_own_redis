@@ -3,6 +3,8 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 using namespace std;
+
+// Structs
 struct in_addr
 {
   uint32_t s_addr; //IPv4 in big-endian
@@ -13,6 +15,9 @@ struct sockaddr_in
   uint16_t sin_port;       // port in big-endian
   struct in_addr sin_addr;// IPv4
 };
+
+// Function prototypes
+static void do_something(int connfd);
 int main()
 {
   //Creating a file descriptor for a network socket that uses IPv4
@@ -32,6 +37,22 @@ int main()
     die("bind()");
     
     // Listen 
+    rv =  listen(fd, SOMAXCONN);
+    if (rv)
+      die("listen()");
+      
+    while true)
+    {
+      // Accept
+      struct sockaddr_in client_addr = {}
+      socklen_t addrlne = sizeof(client_addr);
+      int connfd = accept(fd, (struct sockaddr *)&client_addr, addr_len);
+      if (connfd < 0)
+        continue; // Error
+    
+    do_something(confd);
+    close(connfd);
+  }
 
   
   
@@ -39,3 +60,17 @@ int main()
   return 0;
 }
 
+static void do_something(int connfd) 
+{
+  char rbuff[64] = {};
+  ssize_t n = read(connfd, rbuf, sizeof(rbuf) - 1);
+  if (n < 0)
+  {
+    msg("read() error");
+    return;
+  }
+  printf("client says: %s\n", rbuf);
+  char wbuf[] = "world";
+  write(connfd, wbuf, strlen(wbuf);
+}
+  
